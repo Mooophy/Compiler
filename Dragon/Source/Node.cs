@@ -37,7 +37,7 @@ namespace Dragon
 
         public void Emit(string s)
         {
-            Console.Write("\t" + s);
+            Console.WriteLine("\t" + s);
         }
     }
 

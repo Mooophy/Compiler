@@ -23,7 +23,7 @@ namespace Dragon
             this.Used = 0;
         }
 
-        public void Move ()
+        public void Move()
         {
             _look = _lexer.Scan();
         }
