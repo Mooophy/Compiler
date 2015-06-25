@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Text;
+using System.Collections.Generic;
 
 namespace Dragon
 {
     public class Lexer
     {
-        StreamReader _reader;
-        char _curr; // i.e. peek in dragon book
+        private StreamReader _reader;
+        private char _curr; // i.e. peek in dragon book
         public bool EofReached { get; private set; }
         public static int Line { get; private set; }
-        Dictionary<string, Word> _words;
+        private Dictionary<string, Word> _words;
 
-        void reserve(Word w)
+        private void Reserve(Word w)
         {
             _words.Add(w.Lexeme, w); 
         }
@@ -27,20 +25,20 @@ namespace Dragon
             this._curr = ' ';
             this._words = new Dictionary<string, Word>();
 
-            reserve(new Word("if",      Tag.IF));
-            reserve(new Word("else",    Tag.ELSE));
-            reserve(new Word("while",   Tag.WHILE));
-            reserve(new Word("do",      Tag.DO));
-            reserve(new Word("break",   Tag.BREAK));
-            reserve(Word.True);
-            reserve(Word.False);
-            reserve(Type.Int);
-            reserve(Type.Char);
-            reserve(Type.Bool);
-            reserve(Type.Float);
+            this.Reserve(new Word("if", Tag.IF));
+            this.Reserve(new Word("else", Tag.ELSE));
+            this.Reserve(new Word("while", Tag.WHILE));
+            this.Reserve(new Word("do", Tag.DO));
+            this.Reserve(new Word("break", Tag.BREAK));
+            this.Reserve(Word.True);
+            this.Reserve(Word.False);
+            this.Reserve(Type.Int);
+            this.Reserve(Type.Char);
+            this.Reserve(Type.Bool);
+            this.Reserve(Type.Float);
         }
 
-        bool ReadChar()
+        private bool ReadChar()
         {
             try 
             {
@@ -63,7 +61,7 @@ namespace Dragon
             return true;
         }
 
-        bool ReadChar(char ch)
+        private bool ReadChar(char ch)
         {
             if (this.EofReached) return false;
             this.ReadChar();
