@@ -35,11 +35,11 @@ namespace Dragon
 
     public class Token
     {
-        public readonly char TagValue;
+        public char TagValue { get; private set; } 
 
-        public Token(char t) 
+        public Token(char tag) 
         { 
-            this.TagValue = t; 
+            this.TagValue = tag; 
         }
 
         public override string ToString() 
@@ -51,7 +51,7 @@ namespace Dragon
 
     public class Num : Token
     {
-        public readonly int Value;
+        public int Value { get; private set; } 
 
         public Num(int v)
             : base(Tag.NUM) 
@@ -68,7 +68,7 @@ namespace Dragon
 
     public class Word : Token
     {
-        public readonly string Lexeme;
+        public string Lexeme { get; private set; }
 
         public Word(string lexeme, char tag) 
             : base(tag) 
@@ -97,7 +97,7 @@ namespace Dragon
 
     public class Real : Token
     {
-        public readonly float Value;
+        public float Value { get; set; }
 
         public Real(float v) 
             : base(Tag.REAL) 
