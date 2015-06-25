@@ -139,14 +139,22 @@ namespace UnitTests
                 var lex = new Lexer(reader);
                 while (!lex.EofReached)
                     tokens.Add(lex.scan());
-                Assert.AreEqual(7, Lexer.Line);
+                Assert.AreEqual(8, Lexer.Line);
             }
             
-            Assert.AreEqual(22, tokens.Count);
-            Assert.IsNull(tokens[21]);// the last one is null
+            Assert.AreEqual(35, tokens.Count);
+            Assert.IsNull(tokens[34]);// the last one is null
             var expect = new List<string> 
             { 
-                "{", "int", "i", "=", "42",";", "if", "(", "i", ">", "0", ")","{", "i", "=", "i", "+", "55", ";", "}", "}" 
+                "{", 
+                "int", "i", ";",
+                "float", "[", "100", "]", "a", ";",
+                "while", "(", "true", ")",
+                "{",
+                "do", "i", "=", "i", "+", "1", ";",
+                "while","(","a","[","i", "]", "<", "42",")",";",
+                "}",
+                "}"
             };
             for (int i = 0; i != tokens.Count - 1; ++i)
                 Assert.AreEqual(expect[i], tokens[i].ToString());
