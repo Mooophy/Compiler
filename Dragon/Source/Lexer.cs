@@ -70,7 +70,7 @@ namespace Dragon
             return true;
         }
 
-        public Token scan()
+        public Token Scan()
         {
             //for white spaces
             for (; !this.EofReached; this.ReadChar())

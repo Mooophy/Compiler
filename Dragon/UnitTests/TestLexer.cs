@@ -119,7 +119,7 @@ namespace UnitTests
             var lex = new Lexer(reader);
             var tokens = new List<Token>();
             while (!lex.EofReached)
-                tokens.Add(lex.scan());
+                tokens.Add(lex.Scan());
             reader.Close();
 
             Assert.AreEqual(2, Lexer.Line);
@@ -138,7 +138,7 @@ namespace UnitTests
             {
                 var lex = new Lexer(reader);
                 while (!lex.EofReached)
-                    tokens.Add(lex.scan());
+                    tokens.Add(lex.Scan());
                 Assert.AreEqual(8, Lexer.Line);
             }
             

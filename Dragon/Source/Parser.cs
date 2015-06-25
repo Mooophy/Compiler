@@ -25,7 +25,7 @@ namespace Dragon
 
         public void Move ()
         {
-            _look = _lexer.scan();
+            _look = _lexer.Scan();
         }
 
         public void Error(string msg)
