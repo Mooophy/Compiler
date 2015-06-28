@@ -80,7 +80,7 @@ namespace Dragon
 
         public override string ToString()
         {
-            return "[" + this.Size + "]" + this.Of.ToString();
+            return "[" + this.Size + "] " + this.Of.ToString();
         }
     }
 }
