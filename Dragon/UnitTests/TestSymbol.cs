@@ -63,6 +63,7 @@ namespace UnitTests
             Assert.AreEqual(Dragon.Type.Float, arr.Of);
             Assert.AreEqual(42, arr.Size);
             Assert.AreEqual("[42] float", arr.ToString());
+            Assert.AreEqual(8 * 42, arr.Width);
         }
     }
 }
