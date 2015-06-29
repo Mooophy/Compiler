@@ -14,12 +14,17 @@
             True = new Constant(Word.True, Dragon.Type.Bool),
             False = new Constant(Word.False, Dragon.Type.Bool);
 
-        public override void Jumping(int t, int f)
+        /// <summary>
+        /// Only for Constant.True and Constant.False
+        /// </summary>
+        /// <param name="lineForTrue"></param>
+        /// <param name="lineForFalse"></param>
+        public override void Jumping(int lineForTrue, int lineForFalse)
         {
-            if (this == Constant.True && t != 0)
-                this.Emit("goto L" + t);
-            else if(this == Constant.False && f != 0)
-                this.Emit("goto L" + f);
+            if (this == Constant.True && lineForTrue != 0)
+                this.Emit("goto L" + lineForTrue);
+            else if(this == Constant.False && lineForFalse != 0)
+                this.Emit("goto L" + lineForFalse);
         }
     }
 
@@ -71,12 +76,12 @@
             : base(tok, lhs, rhs)
         { }
 
-        public override void Jumping(int t, int f)
+        public override void Jumping(int lineForTrue, int lineForFalse)
         {
-            int label = t != 0 ? t : this.NewLable();
+            int label = lineForTrue != 0 ? lineForTrue : this.NewLable();
             this.LhsExpr.Jumping(label, 0);
-            this.RhsExpr.Jumping(t, f);
-            if (t == 0)
+            this.RhsExpr.Jumping(lineForTrue, lineForFalse);
+            if (lineForTrue == 0)
                 this.EmitLabel(label);
         }
     }
