@@ -76,7 +76,7 @@ namespace Dragon
         static int Count = 0;
         public int Number { get; private set; }
 
-        public Temp(Type type)
+        public Temp(Dragon.Type type)
             : base(Word.temp, type)
         {
             this.Number = ++Temp.Count;
@@ -92,13 +92,13 @@ namespace Dragon
     // not tested yet
     public class Op : Expr
     {
-        public Op(Token tok, Type type)
+        public Op(Token tok, Dragon.Type type)
             : base(tok, type)
         { }
 
         public override Expr Reduce()
         {
-            Expr expr = this.Gen();
+            Expr expr = this.Gen();  //Note: the method Gen is virtual, so polymorphism will happen here.
             Temp temp = new Temp(this.Type);
             this.Emit(temp.ToString() + " = " + expr.ToString());
             return temp;
