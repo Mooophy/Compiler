@@ -105,35 +105,6 @@ namespace Dragon
     }
 
 
-    public class Access : Op
-    {
-        public Id Array;
-        public Expr Index;
-
-        public Access(Id arr, Expr idx, Type type)
-            : base(new Word("[]", Tag.INDEX), type)
-        {
-            this.Array = arr;
-            this.Index = idx;
-        }
-
-        public override Expr Gen()
-        {
-            return new Access(this.Array, this.Index.Reduce(), this.Type);
-        }
-
-        public override void Jumping(int t, int f)
-        {
-            this.EmitJumps(this.Reduce().ToString(), t, f);
-        }
-
-        public override string ToString()
-        {
-            return this.Array.ToString() + " [ " + this.Index.ToString() + " ]";
-        }
-    }
-
-
     public class Arith : Op
     {
         public Expr ExprLeft;
