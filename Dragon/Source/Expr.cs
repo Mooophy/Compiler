@@ -89,7 +89,6 @@ namespace Dragon
     }
 
 
-    // not tested yet
     public class Op : Expr
     {
         public Op(Token tok, Dragon.Type type)
@@ -140,8 +139,8 @@ namespace Dragon
         public Expr ExprLeft;
         public Expr ExprRight;
 
-        public Arith(Token tok, Expr lhs, Expr rhs)
-            : base(tok, null)
+        public Arith(Token op, Expr lhs, Expr rhs)
+            : base(op, null)
         {
             this.ExprLeft = lhs;
             this.ExprRight = rhs;

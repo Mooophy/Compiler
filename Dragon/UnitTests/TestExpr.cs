@@ -65,5 +65,17 @@ namespace UnitTests
             //    t3 = >=
             //    t4 = &&
         }
+
+        [TestMethod]
+        public void TestArith()
+        {
+            var add = new Arith(new Token('+'), new Constant(42), new Constant(99));
+            Assert.AreEqual("42 + 99", add.ToString());
+            Assert.IsTrue(add.Reduce() is Dragon.Temp);
+
+            var mult = new Arith(new Token('*'), new Constant(142), new Constant(0));
+            var poly = new Arith(new Token('-'), add, mult);
+            Assert.AreEqual("42 + 99 - 142 * 0", poly.ToString());
+        }
     }
 }
