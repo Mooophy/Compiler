@@ -77,5 +77,14 @@ namespace UnitTests
             var poly = new Arith(new Token('-'), add, mult);
             Assert.AreEqual("42 + 99 - 142 * 0", poly.ToString());
         }
+
+        [TestMethod]
+        public void TestUnary()
+        {
+            var mult = new Arith(new Token('*'), new Constant(42), new Constant(3));
+            var u = new Unary(new Token('-'), mult);
+            Assert.AreEqual("- 42 * 3", u.ToString());
+            Assert.IsTrue(u.Gen() is Expr);
+        }
     }
 }
