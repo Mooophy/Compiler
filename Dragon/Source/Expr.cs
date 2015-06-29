@@ -22,6 +22,8 @@ namespace Dragon
             return this;
         }
 
+        //Computes or "reduce" an expression down to a single address;
+        //That is, it returns a constant, an identifier, or a temproary name.
         public virtual Expr Reduce()
         {
             return this;
@@ -95,6 +97,8 @@ namespace Dragon
             : base(op, type)
         { }
 
+        //Computes or "reduce" an expression down to a single address;
+        //That is, it returns a constant, an identifier, or a temproary name.
         public override Expr Reduce()
         {
             Expr expr = this.Gen();  //Note: the method Gen is virtual, so polymorphism will happen here.
