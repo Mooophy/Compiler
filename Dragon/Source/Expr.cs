@@ -91,8 +91,8 @@ namespace Dragon
 
     public class Op : Expr
     {
-        public Op(Token tok, Dragon.Type type)
-            : base(tok, type)
+        public Op(Token op, Dragon.Type type)
+            : base(op, type)
         { }
 
         public override Expr Reduce()
@@ -134,15 +134,14 @@ namespace Dragon
 
     public class Unary : Op
     {
-        public Expr Expr;
+        public Expr Expr { get; private set; }
 
-        public Unary(Token tok, Expr expr)
-            : base(tok, null)
+        public Unary(Token op, Expr expr)
+            : base(op, Dragon.Type.Max(Dragon.Type.Int, expr.Type))
         {
-            this.Expr = expr;
-            this.Type = Dragon.Type.Max(Dragon.Type.Int, this.Expr.Type);
             if (this.Type == null)
                 this.Error("type error");
+            this.Expr = expr;
         }
 
         public override Expr Gen()
