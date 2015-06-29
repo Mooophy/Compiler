@@ -33,9 +33,11 @@ namespace UnitTests
         public void TestTemp()
         {
             var temp = new Temp(Dragon.Type.Float);
+            Assert.AreEqual(1, temp.Number);            
             Assert.AreEqual("t1", temp.ToString());
 
             var another_temp = new Temp(Dragon.Type.Int);
+            Assert.AreEqual(2, another_temp.Number);
             Assert.AreEqual("t2", another_temp.ToString());
         }
     }

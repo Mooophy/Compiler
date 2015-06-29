@@ -74,17 +74,17 @@ namespace Dragon
     public class Temp : Expr
     {
         static int Count = 0;
-        int _number;
+        public int Number { get; private set; }
 
         public Temp(Type type)
             : base(Word.temp, type)
         {
-            this._number = ++Temp.Count;
+            this.Number = ++Temp.Count;
         }
 
         public override string ToString()
         {
-            return "t" + _number;
+            return "t" + this.Number;
         }
     }
 
