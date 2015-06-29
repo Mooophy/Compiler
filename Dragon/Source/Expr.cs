@@ -27,9 +27,9 @@ namespace Dragon
             return this;
         }
 
-        public virtual void Jumping(int t, int f)
+        public virtual void Jumping(int lineForTrue, int lineForFalse)
         {
-            this.EmitJumps(this.ToString(), t, f);
+            this.EmitJumps(this.ToString(), lineForTrue, lineForFalse);
         }
 
         public void EmitJumps(string test, int lineForTrue, int lineForFalse)
