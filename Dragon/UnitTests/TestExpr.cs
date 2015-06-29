@@ -40,5 +40,30 @@ namespace UnitTests
             Assert.AreEqual(2, another_temp.Number);
             Assert.AreEqual("t2", another_temp.ToString());
         }
+
+        [TestMethod]
+        public void TestOp()
+        {
+            var plus = new Op(new Token('+'), Dragon.Type.Int);
+            plus.Reduce(); 
+
+            var mult = new Op(new Token('*'), Dragon.Type.Float);
+            mult.Reduce();
+
+            var grte = new Op(Word.ge, Dragon.Type.Char);
+            grte.Reduce();
+
+            var and = new Op(Word.and, Dragon.Type.Int);
+            and.Reduce();
+
+            //output:
+            //Test Name:	TestOp
+            //Test Outcome:	Passed
+            //Result StandardOutput:	
+            //    t1 = +
+            //    t2 = *
+            //    t3 = >=
+            //    t4 = &&
+        }
     }
 }
