@@ -91,7 +91,7 @@
 
 
     /// <summary>
-    ///  B = lhs || rhs
+    ///  B = Lhs || Rhs
     /// </summary>
     public class Or : Logical
     {
@@ -121,18 +121,31 @@
     }
 
 
+    /// <summary>
+    /// B = Lhs && RHS 
+    /// </summary>
     public class And : Logical
     {
-        public And(Token tok, Expr lhs, Expr rhs)
-            : base(tok, lhs, rhs)
+        /// <summary>
+        /// Ctor
+        /// Note : this differs the textbook version by omitting the Token parameter.
+        /// </summary>
+        /// <param name="lhs"></param>
+        /// <param name="rhs"></param>
+        public And(Expr lhs, Expr rhs)
+            : base(Word.and, lhs, rhs)
         { }
-
-        public override void Jumping(int t, int f)
+        /// <summary>
+        /// Polymorphism happens
+        /// </summary>
+        /// <param name="trueExit"></param>
+        /// <param name="falseExit"></param>
+        public override void Jumping(int trueExit, int falseExit)
         {
-            int label = f != 0 ? f : this.NewLable();
+            int label = falseExit != 0 ? falseExit : this.NewLable();
             this.Lhs.Jumping(0, label);
-            this.Rhs.Jumping(t, f);
-            if (f == 0)
+            this.Rhs.Jumping(trueExit, falseExit);
+            if (falseExit == 0)
                 this.EmitLabel(label);
         }
     }

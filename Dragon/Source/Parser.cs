@@ -211,9 +211,9 @@ namespace Dragon
             Expr expr = this.Equality();
             while(_look.TagValue == Tag.AND)
             {
-                var tok = _look;
+                //var tok = _look;
                 this.Move();
-                expr = new And(tok, expr, this.Equality());
+                expr = new And(expr, this.Equality());
             }
             return expr;
         }
