@@ -230,26 +230,41 @@
 
     public class Access : Op
     {
-        public Id Array;
-        public Expr Index;
-
-        public Access(Id arr, Expr idx, Type type)
+        public Id Array { get; private set; }
+        public Expr Index { get; private set; }
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="idx"></param>
+        /// <param name="type"></param>
+        public Access(Id arr, Expr idx, Dragon.Type type)
             : base(new Word("[]", Tag.INDEX), type)
         {
             this.Array = arr;
             this.Index = idx;
         }
-
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <returns></returns>
         public override Expr Gen()
         {
             return new Access(this.Array, this.Index.Reduce(), this.Type);
         }
-
-        public override void Jumping(int t, int f)
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <param name="trueExit"></param>
+        /// <param name="falseExit"></param>
+        public override void Jumping(int trueExit, int falseExit)
         {
-            this.EmitJumps(this.Reduce().ToString(), t, f);
+            this.EmitJumps(this.Reduce().ToString(), trueExit, falseExit);
         }
-
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.Array.ToString() + " [ " + this.Index.ToString() + " ]";
