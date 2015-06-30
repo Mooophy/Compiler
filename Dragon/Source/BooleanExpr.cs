@@ -122,7 +122,7 @@
 
 
     /// <summary>
-    /// B = Lhs && RHS 
+    /// B = Lhs && Rhs 
     /// </summary>
     public class And : Logical
     {
@@ -150,21 +150,35 @@
         }
     }
 
-
+    /// <summary>
+    /// B = !Rhs
+    /// </summary>
     public class Not : Logical
     {
-        public Not(Token tok, Expr rhs)
-            : base(tok, rhs, rhs)
+        /// <summary>
+        /// Ctor
+        /// Note : this differs the textbook version by omitting the Token parameter.
+        /// </summary>
+        /// <param name="expr"></param>
+        public Not(Expr expr)
+            : base(new Token('!'), expr, expr)
         { }
-
-        public override void Jumping(int t, int f)
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <param name="trueExit"></param>
+        /// <param name="falseExit"></param>
+        public override void Jumping(int trueExit, int falseExit)
         {
-            this.Rhs.Jumping(f, t);
+            this.Rhs.Jumping(falseExit, trueExit);
         }
-
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
-            return this.Op.ToString() + " " + Rhs.ToString();
+            return this.Op.ToString() + " " + this.Rhs.ToString();
         }
     }
 

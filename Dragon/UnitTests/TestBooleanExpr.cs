@@ -60,5 +60,16 @@ namespace UnitTests
             //output:
             //  	  goto L42
         }
+
+        [TestMethod]
+        public void TestNot()
+        {
+            var not = new Not(Constant.True);
+            Assert.AreEqual("! true", not.ToString());
+
+            not.Jumping(42, 99);
+            //output:
+            //  	  goto L99
+        }
     }
 }

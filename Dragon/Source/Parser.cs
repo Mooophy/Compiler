@@ -275,9 +275,9 @@ namespace Dragon
             }
             else if (_look.TagValue == '!')
             {
-                Token tok = _look;
+                //Token tok = _look;
                 this.Move();
-                return new Not(tok, this.Unary());
+                return new Not(this.Unary());
             }
             else
                 return this.Factor();
