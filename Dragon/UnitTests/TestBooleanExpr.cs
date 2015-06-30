@@ -5,7 +5,7 @@ using Dragon;
 namespace UnitTests
 {
     [TestClass]
-    public class TestConstant
+    public class TestBooleanExpr
     {
         [TestMethod]
         public void TestConstantStaticMembers()
