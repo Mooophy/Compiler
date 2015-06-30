@@ -51,8 +51,8 @@
 
         public override Expr Gen()
         {
-            int falseExit = this.NewLable();
-            int after = this.NewLable();
+            var falseExit = this.NewLable();
+            var after = this.NewLable();
             var temp = new Temp(this.Type);
             this.Jumping(0, falseExit);
             this.Emit(temp.ToString() + " = true");
