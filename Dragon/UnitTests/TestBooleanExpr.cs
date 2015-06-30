@@ -38,5 +38,10 @@ namespace UnitTests
             //L1:	  t1 = false
             //L2:
         }
+
+        [TestMethod]
+        public void TestOr()
+        {
+        }
     }
 }

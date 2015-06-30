@@ -90,18 +90,32 @@
     }
 
 
+    /// <summary>
+    ///  B = lhs || rhs
+    /// </summary>
     public class Or : Logical
     {
-        public Or(Token tok, Expr lhs, Expr rhs)
-            : base(tok, lhs, rhs)
+        /// <summary>
+        /// Ctor
+        /// Note : this differs the textbook version by omitting the Token parameter.
+        /// </summary>
+        /// <param name="lhs">Expr</param>
+        /// <param name="rhs">Expr</param>
+        public Or(Expr lhs, Expr rhs)
+            : base(Word.or, lhs, rhs)
         { }
 
-        public override void Jumping(int lineForTrue, int lineForFalse)
+        /// <summary>
+        /// Polymorphism happens
+        /// </summary>
+        /// <param name="trueExit"></param>
+        /// <param name="falseExit"></param>
+        public override void Jumping(int trueExit, int falseExit)
         {
-            int label = lineForTrue != 0 ? lineForTrue : this.NewLable();
-            this.Lhs.Jumping(label, 0);
-            this.Rhs.Jumping(lineForTrue, lineForFalse);
-            if (lineForTrue == 0)
+            var label = trueExit != 0 ? trueExit : this.NewLable();
+            this.Lhs.Jumping(label, 0);             //polymorphism expected
+            this.Rhs.Jumping(trueExit, falseExit);  //polymorphism expected
+            if (trueExit == 0)
                 this.EmitLabel(label);
         }
     }
