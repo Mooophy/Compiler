@@ -83,5 +83,18 @@ namespace UnitTests
             //        if 10 < 100 goto L42
             //        goto L99
         }
+
+        [TestMethod]
+        public void TestAccess()
+        {
+            var acc = new Access(new Id(new Word("val", Tag.ID), Dragon.Type.Int, 0xcf), new Constant(42), Dragon.Type.Int);
+            Assert.AreEqual("val [ 42 ]", acc.ToString());
+            Assert.IsTrue(acc.Gen() is Access);
+            acc.Jumping(10, 100);
+                //output:
+                //t1 = val [ 42 ]
+                //if t1 goto L10
+                //goto L100
+        }
     }
 }
