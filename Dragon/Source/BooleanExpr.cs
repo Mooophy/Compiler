@@ -31,18 +31,18 @@
 
     public class Logical : Expr
     {
-        public Expr LhsExpr, RhsExpr;
+        public Expr Lhs { get; private set; }
+        public Expr Rhs { get; private set; }
 
-        public Logical(Token tok, Expr lhs, Expr rhs)
-            : base(tok, null)
+        public Logical(Token op, Expr lhs, Expr rhs)
+            : base(op, Logical.Check(lhs.Type, rhs.Type))
         {
-            this.LhsExpr = lhs;
-            this.RhsExpr = rhs;
-            if (null == this.Check(this.LhsExpr.Type, this.RhsExpr.Type))
-                this.Error("type error");
+            this.Lhs = lhs;
+            this.Rhs = rhs;
+            if (null == this.Type) this.Error("type error");
         }
 
-        public Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
+        private static Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
         {
             if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) 
                 return Dragon.Type.Bool;
@@ -51,21 +51,21 @@
 
         public override Expr Gen()
         {
-            int f = this.NewLable();
-            int a = this.NewLable();
-            Temp temp = new Temp(this.Type);
-            this.Jumping(0, f);
+            int falseExit = this.NewLable();
+            int after = this.NewLable();
+            var temp = new Temp(this.Type);
+            this.Jumping(0, falseExit);
             this.Emit(temp.ToString() + " = true");
-            this.Emit("goto L" + a);
-            this.EmitLabel(f);
+            this.Emit("goto L" + after);
+            this.EmitLabel(falseExit);
             this.Emit(temp.ToString() + " = false");
-            this.EmitLabel(a);
+            this.EmitLabel(after);
             return temp;
         }
 
         public override string ToString()
         {
-            return this.LhsExpr.ToString() + " " + this.Op.ToString() + " " + this.RhsExpr.ToString();
+            return this.Lhs.ToString() + " " + this.Op.ToString() + " " + this.Rhs.ToString();
         }
     }
 
@@ -79,8 +79,8 @@
         public override void Jumping(int lineForTrue, int lineForFalse)
         {
             int label = lineForTrue != 0 ? lineForTrue : this.NewLable();
-            this.LhsExpr.Jumping(label, 0);
-            this.RhsExpr.Jumping(lineForTrue, lineForFalse);
+            this.Lhs.Jumping(label, 0);
+            this.Rhs.Jumping(lineForTrue, lineForFalse);
             if (lineForTrue == 0)
                 this.EmitLabel(label);
         }
@@ -96,8 +96,8 @@
         public override void Jumping(int t, int f)
         {
             int label = f != 0 ? f : this.NewLable();
-            this.LhsExpr.Jumping(0, label);
-            this.RhsExpr.Jumping(t, f);
+            this.Lhs.Jumping(0, label);
+            this.Rhs.Jumping(t, f);
             if (f == 0)
                 this.EmitLabel(label);
         }
@@ -112,12 +112,12 @@
 
         public override void Jumping(int t, int f)
         {
-            this.RhsExpr.Jumping(f, t);
+            this.Rhs.Jumping(f, t);
         }
 
         public override string ToString()
         {
-            return this.Op.ToString() + " " + RhsExpr.ToString();
+            return this.Op.ToString() + " " + Rhs.ToString();
         }
     }
 
@@ -137,8 +137,8 @@
 
         public override void Jumping(int t, int f)
         {
-            Expr lft = this.LhsExpr.Reduce();
-            Expr rht = this.RhsExpr.Reduce();
+            Expr lft = this.Lhs.Reduce();
+            Expr rht = this.Rhs.Reduce();
             string test = lft.ToString() + " " + this.Op.ToString() + " " + rht.ToString();
             this.EmitJumps(test, t, f);
         }
