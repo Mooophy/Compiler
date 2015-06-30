@@ -29,11 +29,20 @@
     }
 
 
+    /// <summary>
+    /// A syntax node with operator op and operands lhs and rhs, providing common functionality for classes Or, And and Not.
+    /// </summary>
     public class Logical : Expr
     {
         public Expr Lhs { get; private set; }
         public Expr Rhs { get; private set; }
 
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="op">operator</param>
+        /// <param name="lhs">boolean operand</param>
+        /// <param name="rhs">boolean operand</param>
         public Logical(Token op, Expr lhs, Expr rhs)
             : base(op, Logical.Check(lhs.Type, rhs.Type))
         {
@@ -41,14 +50,22 @@
             this.Rhs = rhs;
             if (null == this.Type) this.Error("type error");
         }
-
+        /// <summary>
+        /// Check if both are Dragon.Type.Bool
+        /// </summary>
+        /// <param name="lhs"></param>
+        /// <param name="rhs"></param>
+        /// <returns>Dragon.Type.Bool or null</returns>
         private static Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
         {
             if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) 
                 return Dragon.Type.Bool;
             return null;
         }
-
+        /// <summary>
+        /// Overriding to generate OpCode
+        /// </summary>
+        /// <returns>Temp object</returns>
         public override Expr Gen()
         {
             var falseExit = this.NewLable();
@@ -62,7 +79,10 @@
             this.EmitLabel(after);
             return temp;
         }
-
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <returns>string</returns>
         public override string ToString()
         {
             return this.Lhs.ToString() + " " + this.Op.ToString() + " " + this.Rhs.ToString();
