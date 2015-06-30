@@ -2,11 +2,27 @@
 {
     public class Stmt : Node
     {
-        public Stmt() { }
+        public int After { get; private set; }
+        /// <summary>
+        /// Ctor, does nothing, the work is done in the subclasses
+        /// </summary>
+        public Stmt() 
+        {
+            this.After = 0;
+        }
+        /// <summary>
+        /// Virtual
+        /// </summary>
+        /// <param name="begin">label</param>
+        /// <param name="after">label</param>
+        public virtual void Gen(int begin, int after) { }
+        /// <summary>
+        /// Representing an empty sequence
+        /// </summary>
         public static Stmt Null = new Stmt();
-
-        public virtual void Gen(int beginning, int after) { }
-        public int After = 0;
+        /// <summary>
+        /// Used during parsing to keep track of the enclosing construct.
+        /// </summary>
         public static Stmt Enclosing = Stmt.Null;
     }
 
