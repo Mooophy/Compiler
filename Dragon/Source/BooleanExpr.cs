@@ -189,23 +189,40 @@
     /// </summary>
     public class Rel : Logical
     {
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="op"></param>
+        /// <param name="lhs"></param>
+        /// <param name="rhs"></param>
         public Rel(Token op, Expr lhs, Expr rhs)
             : base(op, lhs, rhs)
-        { }
-
-        public Dragon.Type check(Dragon.Type lft, Dragon.Type rht)
         {
-            if (lft is Array || rht is Array) return null;
-            else if (lft == rht) return Dragon.Type.Bool;
-            else return null;
+            if (null == Rel.Check(this.Lhs.Type, this.Rhs.Type))
+                this.Error("type error");
         }
-
-        public override void Jumping(int t, int f)
+        /// <summary>
+        /// Check the two operands have the same type and neither is Array
+        /// </summary>
+        /// <param name="lft"></param>
+        /// <param name="rht"></param>
+        /// <returns></returns>
+        private static Dragon.Type Check(Dragon.Type lft, Dragon.Type rht)
         {
-            Expr lft = this.Lhs.Reduce();
-            Expr rht = this.Rhs.Reduce();
-            string test = lft.ToString() + " " + this.Op.ToString() + " " + rht.ToString();
-            this.EmitJumps(test, t, f);
+            if (lft is Array || rht is Array)
+                return null;
+            else
+                return lft == rht ? Dragon.Type.Bool : null;
+        }
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <param name="trueExit"></param>
+        /// <param name="falseExit"></param>
+        public override void Jumping(int trueExit, int falseExit)
+        {
+            var test = this.Lhs.Reduce().ToString() + " " + this.Op.ToString() + " " + this.Rhs.Reduce().ToString();
+            this.EmitJumps(test, trueExit, falseExit);
         }
     }
 
