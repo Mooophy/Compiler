@@ -44,10 +44,21 @@ namespace UnitTests
         {
             var or = new Or(Constant.False, Constant.False);
             Assert.AreEqual("false || false", or.ToString());
-            or.Jumping(42, 99);
 
+            or.Jumping(42, 99);
             //output:
             //  	  goto L99
+        }
+
+        [TestMethod]
+        public void TestAnd()
+        {
+            var and = new And(Constant.True, Constant.True);
+            Assert.AreEqual("true && true", and.ToString());
+
+            and.Jumping(42, 99);
+            //output:
+            //  	  goto L42
         }
     }
 }
