@@ -71,5 +71,11 @@ namespace UnitTests
             //output:
             //  	  goto L99
         }
+
+        [TestMethod]
+        public void TestRel()
+        {
+            var isLess = new Rel(new Token('<'), new Constant(42), new Constant(99));
+        }
     }
 }

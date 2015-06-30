@@ -44,19 +44,22 @@
         /// <param name="lhs">boolean operand</param>
         /// <param name="rhs">boolean operand</param>
         public Logical(Token op, Expr lhs, Expr rhs)
-            : base(op, Logical.Check(lhs.Type, rhs.Type))
+            : base(op, null)
         {
             this.Lhs = lhs;
             this.Rhs = rhs;
-            if (null == this.Type) this.Error("type error");
+            this.Type = this.Check(lhs.Type, rhs.Type);
+            if (null == this.Type) 
+                this.Error("type error");
         }
         /// <summary>
+        /// Virtual
         /// Check if both are Dragon.Type.Bool
         /// </summary>
         /// <param name="lhs"></param>
         /// <param name="rhs"></param>
         /// <returns>Dragon.Type.Bool or null</returns>
-        private static Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
+        protected virtual Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
         {
             if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) 
                 return Dragon.Type.Bool;
@@ -197,17 +200,15 @@
         /// <param name="rhs"></param>
         public Rel(Token op, Expr lhs, Expr rhs)
             : base(op, lhs, rhs)
-        {
-            if (null == Rel.Check(this.Lhs.Type, this.Rhs.Type))
-                this.Error("type error");
-        }
+        { }
         /// <summary>
+        /// Overriding
         /// Check the two operands have the same type and neither is Array
         /// </summary>
         /// <param name="lft"></param>
         /// <param name="rht"></param>
         /// <returns></returns>
-        private static Dragon.Type Check(Dragon.Type lft, Dragon.Type rht)
+        protected override Dragon.Type Check(Dragon.Type lft, Dragon.Type rht)
         {
             if (lft is Array || rht is Array)
                 return null;
