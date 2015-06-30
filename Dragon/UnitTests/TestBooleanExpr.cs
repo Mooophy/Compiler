@@ -75,7 +75,13 @@ namespace UnitTests
         [TestMethod]
         public void TestRel()
         {
-            var isLess = new Rel(new Token('<'), new Constant(42), new Constant(99));
+            var isLess = new Rel(new Token('<'), new Constant(10), new Constant(100));
+            Assert.AreEqual("10 < 100", isLess.ToString());
+
+            isLess.Jumping(42, 99);
+            //output:
+            //        if 10 < 100 goto L42
+            //        goto L99
         }
     }
 }
