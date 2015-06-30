@@ -42,6 +42,12 @@ namespace UnitTests
         [TestMethod]
         public void TestOr()
         {
+            var or = new Or(Constant.False, Constant.False);
+            Assert.AreEqual("false || false", or.ToString());
+            or.Jumping(42, 99);
+
+            //output:
+            //  	  goto L99
         }
     }
 }

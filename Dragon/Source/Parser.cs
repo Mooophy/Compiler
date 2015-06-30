@@ -199,9 +199,9 @@ namespace Dragon
             Expr expr = this.Join();
             while(_look.TagValue == Tag.OR)
             {
-                var tok = _look;
+                //var tok = _look;
                 this.Move();
-                expr = new Or(tok, expr, this.Join());
+                expr = new Or(expr, this.Join());
             }
             return expr;
         }
