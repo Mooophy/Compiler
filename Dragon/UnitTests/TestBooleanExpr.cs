@@ -91,10 +91,10 @@ namespace UnitTests
             Assert.AreEqual("val [ 42 ]", acc.ToString());
             Assert.IsTrue(acc.Gen() is Access);
             acc.Jumping(10, 100);
-                //output:
-                //t1 = val [ 42 ]
-                //if t1 goto L10
-                //goto L100
+            //output:
+            //          t1 = val [ 42 ]
+            //          if t1 goto L10
+            //          goto L100
         }
     }
 }

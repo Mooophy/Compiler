@@ -228,6 +228,9 @@
     }
 
 
+    /// <summary>
+    /// Access for boolean value stored in array
+    /// </summary>
     public class Access : Op
     {
         public Id Array { get; private set; }
