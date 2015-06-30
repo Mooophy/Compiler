@@ -183,10 +183,14 @@
     }
 
 
+    /// <summary>
+    /// Implementation for < <= == != >= >
+    /// Note: coercions are not permitted 
+    /// </summary>
     public class Rel : Logical
     {
-        public Rel(Token tok, Expr lhs, Expr rhs)
-            : base(tok, lhs, rhs)
+        public Rel(Token op, Expr lhs, Expr rhs)
+            : base(op, lhs, rhs)
         { }
 
         public Dragon.Type check(Dragon.Type lft, Dragon.Type rht)
