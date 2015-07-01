@@ -241,8 +241,6 @@
             var idx = this.Index.Reduce().ToString();
             var val = this.Expr.Reduce().ToString();
             this.Emit(this.Array.ToString() + " [ " + idx + " ] = " + val);
-            //output:
-
         }
     }
 
