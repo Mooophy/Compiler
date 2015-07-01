@@ -228,7 +228,7 @@
                 this.Error("type error");
         }
 
-        public Type Check(Type lhs, Type rhs)
+        public Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
         {
             if (lhs is Array || rhs is Array) return null;
             else if (lhs == rhs) return rhs;
@@ -238,8 +238,8 @@
 
         public override void Gen(int beginning, int after)
         {
-            string idx = this.Index.Reduce().ToString();
-            string val = this.Expr.Reduce().ToString();
+            var idx = this.Index.Reduce().ToString();
+            var val = this.Expr.Reduce().ToString();
             this.Emit(this.Array.ToString() + " [ " + idx + " ] = " + val);
         }
     }
