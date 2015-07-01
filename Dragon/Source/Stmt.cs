@@ -55,11 +55,11 @@
         /// <summary>
         /// Just a placeholder for the Gen methods in the subclasses
         /// </summary>
-        /// <param name="beginning"></param>
+        /// <param name="begin"></param>
         /// <param name="after"></param>
-        public override void Gen (int beginning, int after)
+        public override void Gen (int begin, int after)
         {
-            int lable = this.NewLable();    //label for the code for stmt
+            var lable = this.NewLable();    //label for the code for stmt
             this.Expr.Jumping(0, after);    //fall through on true, goto "after" on false
             this.EmitLabel(lable);
             this.Stmt.Gen(lable, after);
