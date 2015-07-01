@@ -67,12 +67,21 @@
     }
 
 
-    public class Else : Stmt
+    /// <summary>
+    /// if (Expr) Stmt1 else stmt2
+    /// </summary>
+    public class IfElse : Stmt
     {
-        public Expr Expr;
-        public Stmt Stmt1, Stmt2;
-
-        public Else(Expr expr, Stmt stmt1, Stmt stmt2)
+        public Expr Expr { get; private set; }
+        public Stmt Stmt1 { get; private set; }
+        public Stmt Stmt2 { get; private set; }
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="expr">bool</param>
+        /// <param name="stmt1">stmt for true</param>
+        /// <param name="stmt2">stmt for false</param>
+        public IfElse(Expr expr, Stmt stmt1, Stmt stmt2)
         {
             this.Expr = expr;
             this.Stmt1 = stmt1;
@@ -80,7 +89,11 @@
             if (this.Expr.Type != Dragon.Type.Bool)
                 this.Expr.Error("boolean required in if");
         }
-
+        /// <summary>
+        /// Overriding
+        /// </summary>
+        /// <param name="beginning"></param>
+        /// <param name="after"></param>
         public override void Gen(int beginning, int after)
         {
             int label1 = this.NewLable();

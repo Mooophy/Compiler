@@ -125,7 +125,7 @@ namespace Dragon
 
                     this.Match(Tag.ELSE);
                     s2 = this.Stmt();
-                    return new Else(expr, s1, s2);
+                    return new IfElse(expr, s1, s2);
 
                 case Tag.WHILE:
                     var whileNode = new While();
