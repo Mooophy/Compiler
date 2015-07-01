@@ -211,13 +211,13 @@
 
 
     /// <summary>
-    /// 
+    /// Implementing assignments to an array element
     /// </summary>
     public class SetElem : Stmt
     {
-        public Id Array;
-        public Expr Index;
-        public Expr Expr;
+        public Id Array { get; private set; }
+        public Expr Index { get; private set; }
+        public Expr Expr { get; private set; }
 
         public SetElem(Access access, Expr expr)
         {
@@ -238,9 +238,9 @@
 
         public override void Gen(int beginning, int after)
         {
-            string s1 = this.Index.Reduce().ToString();
-            string s2 = this.Expr.Reduce().ToString();
-            this.Emit(this.Array.ToString() + " [ " + s1 + " ] = " + s2);
+            string idx = this.Index.Reduce().ToString();
+            string val = this.Expr.Reduce().ToString();
+            this.Emit(this.Array.ToString() + " [ " + idx + " ] = " + val);
         }
     }
 
