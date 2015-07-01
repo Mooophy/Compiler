@@ -144,10 +144,13 @@
     }
 
 
+    /// <summary>
+    /// do stmt while (bool)
+    /// </summary>
     public class Do : Stmt
     {
-        public Expr Expr;
-        public Stmt Stmt;
+        public Expr Expr { get; private set; }
+        public Stmt Stmt { get; private set; }
 
         public Do()
         {
@@ -166,7 +169,7 @@
         public override void Gen(int beginning, int after)
         {
             this.After = after;
-            int label = this.NewLable();
+            var label = this.NewLable();
             this.Stmt.Gen(beginning, label);
             this.EmitLabel(label);
             this.Expr.Jumping(beginning, 0);
