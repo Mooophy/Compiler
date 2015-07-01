@@ -23,5 +23,16 @@ namespace UnitTests
             //      goto L99
             //L1:
         }
+
+        [TestMethod]
+        public void TestIfElse()
+        {
+            var ifElse = new IfElse(new Rel(new Token('>'), new Constant(42), new Constant(99)), new Stmt(), new Stmt());
+            ifElse.Gen(10, 100);
+            //output:
+            //      iffalse 42 > 99 goto L2
+            //L1:	goto L100
+            //L2:
+        }
     }
 }
