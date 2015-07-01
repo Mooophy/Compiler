@@ -45,5 +45,15 @@ namespace UnitTests
             //      iffalse 42 > 99 goto L88
             //L1:	goto L 10
         }
+
+        [TestMethod]
+        public void TestDo()
+        {
+            var do_ = new Do();
+            do_.Init(new Stmt(), new Rel(new Token('>'), new Constant(42), new Constant(99)));
+            do_.Gen(10, 20);
+            //output:
+            //L1:	if 42 > 99 goto L10
+        }
     }
 }

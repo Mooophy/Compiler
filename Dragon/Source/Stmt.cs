@@ -166,13 +166,13 @@
                 this.Expr.Error("boolean requried in do");
         }
 
-        public override void Gen(int beginning, int after)
+        public override void Gen(int begin, int after)
         {
             this.After = after;
             var label = this.NewLable();
-            this.Stmt.Gen(beginning, label);
+            this.Stmt.Gen(begin, label);
             this.EmitLabel(label);
-            this.Expr.Jumping(beginning, 0);
+            this.Expr.Jumping(begin, 0);
         }
     }
 
