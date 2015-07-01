@@ -211,7 +211,7 @@
 
 
     /// <summary>
-    /// Implementing assignments to an array element
+    /// Implementing assignment to an array element
     /// </summary>
     public class SetElem : Stmt
     {
@@ -241,6 +241,8 @@
             var idx = this.Index.Reduce().ToString();
             var val = this.Expr.Reduce().ToString();
             this.Emit(this.Array.ToString() + " [ " + idx + " ] = " + val);
+            //output:
+
         }
     }
 

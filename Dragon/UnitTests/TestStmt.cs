@@ -67,5 +67,15 @@ namespace UnitTests
             //output:
             //      	foo = 55
         }
+
+        [TestMethod]
+        public void TestSetElem()
+        {
+            var acc = new Access(new Id(new Word("arr", Tag.ID), Dragon.Type.Int,0x20), new Constant(20),Dragon.Type.Int);
+            var setElem = new SetElem(acc, new Constant(42));
+            setElem.Gen(10, 20);
+            //Output:	
+            //          arr [ 20 ] = 42
+        }
     }
 }
