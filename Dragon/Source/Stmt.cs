@@ -177,11 +177,13 @@
     }
 
 
-    //for assignment
+    /// <summary>
+    /// Implementing assignment
+    /// </summary>
     public class Set : Stmt
     {
-        public Id Id;
-        public Expr Expr;
+        public Id Id { get; private set; }
+        public Expr Expr { get; private set; }
 
         public Set(Id id, Expr expr)
         {
@@ -191,14 +193,17 @@
                 this.Error("type error");
         }
 
-        public Type Check(Type lhs, Type rhs)
+        public Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
         {
-            if (Dragon.Type.Numeric(lhs) && Dragon.Type.Numeric(rhs)) return rhs;//why rhs?
-            else if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) return rhs;
-            else return null;
+            if (Dragon.Type.Numeric(lhs) && Dragon.Type.Numeric(rhs)) 
+                return rhs;
+            else if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) 
+                return rhs;
+            else 
+                return null;
         }
 
-        public override void Gen(int beginning, int after)
+        public override void Gen(int begin, int after)
         {
             this.Emit(this.Id.ToString() + " = " + this.Expr.Gen().ToString());
         }

@@ -55,5 +55,17 @@ namespace UnitTests
             //output:
             //L1:	if 42 > 99 goto L10
         }
+
+        [TestMethod]
+        public void TestSet()
+        {
+            var foo = new Id(new Word("foo", Tag.ID), Dragon.Type.Int, 0x20);
+            var bar = new Constant(55);
+            var set = new Set(foo, bar);
+
+            set.Gen(10, 20);
+            //output:
+            //      	foo = 55
+        }
     }
 }
