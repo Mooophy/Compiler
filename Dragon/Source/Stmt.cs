@@ -210,7 +210,9 @@
     }
 
 
-    //assignment for an array element
+    /// <summary>
+    /// 
+    /// </summary>
     public class SetElem : Stmt
     {
         public Id Array;
