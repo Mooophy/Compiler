@@ -27,11 +27,24 @@
     }
 
 
+    /// <summary>
+    /// if (Expr) Stmt
+    /// </summary>
     public class If : Stmt
     {
-        public Expr Expr;
-        public Stmt Stmt;
-
+        /// <summary>
+        /// Node Expr
+        /// </summary>
+        public Expr Expr { get; private set; }
+        /// <summary>
+        /// Node Stmt
+        /// </summary>
+        public Stmt Stmt { get; private set; }
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <param name="stmt"></param>
         public If(Expr expr, Stmt stmt)
         {
             this.Expr = expr;
@@ -39,10 +52,14 @@
             if(this.Expr.Type != Type.Bool)
                 this.Expr.Error("boolean required in if");
         }
-
+        /// <summary>
+        /// Just a placeholder for the Gen methods in the subclasses
+        /// </summary>
+        /// <param name="beginning"></param>
+        /// <param name="after"></param>
         public override void Gen (int beginning, int after)
         {
-            int lable = this.NewLable();    //label for the code of "for"
+            int lable = this.NewLable();    //label for the code for stmt
             this.Expr.Jumping(0, after);    //fall through on true, goto "after" on false
             this.EmitLabel(lable);
             this.Stmt.Gen(lable, after);
