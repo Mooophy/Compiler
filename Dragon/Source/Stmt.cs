@@ -2,7 +2,7 @@
 {
     public class Stmt : Node
     {
-        public int After { get; private set; }
+        public int After { get; protected set; }
         /// <summary>
         /// Ctor, does nothing, the work is done in the subclasses
         /// </summary>
