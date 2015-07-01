@@ -20,8 +20,8 @@ namespace UnitTests
             var ifStmt = new If(Constant.False, new Stmt());
             ifStmt.Gen(42, 99);
             //output:
-	        //          goto L99
-            //    L1:
+            //      goto L99
+            //L1:
         }
     }
 }
