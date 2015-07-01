@@ -110,10 +110,13 @@
     }
 
 
+    /// <summary>
+    /// while (bool) stmt
+    /// </summary>
     public class While : Stmt
     {
-        public Expr Expr;
-        public Stmt Stmt;
+        public Expr Expr { get; private set; }
+        public Stmt Stmt { get; private set; }
 
         public While()
         {
@@ -129,14 +132,14 @@
                 this.Expr.Error("boolean requried in while");
         }
 
-        public override void Gen(int beginning, int after)
+        public override void Gen(int begin, int after)
         {
-            this.After = after;             //save after
+            this.After = after;             //save label after
             this.Expr.Jumping(0, after);
-            int label = this.NewLable();    //label for stmt
+            var label = this.NewLable();    //label for stmt
             this.EmitLabel(label);
-            this.Stmt.Gen(label, beginning);
-            this.Emit("goto L " + beginning);
+            this.Stmt.Gen(label, begin);
+            this.Emit("goto L " + begin);
         }
     }
 
