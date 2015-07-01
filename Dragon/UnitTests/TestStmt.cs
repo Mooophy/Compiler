@@ -34,5 +34,16 @@ namespace UnitTests
             //L1:	goto L100
             //L2:
         }
+
+        [TestMethod]
+        public void TestWhile()
+        {
+            var while_ = new While();
+            while_.Init(new Rel(new Token('>'), new Constant(42), new Constant(99)), new Stmt());
+            while_.Gen(10, 88);
+            //output:
+            //      iffalse 42 > 99 goto L88
+            //L1:	goto L 10
+        }
     }
 }
