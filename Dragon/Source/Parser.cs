@@ -7,43 +7,56 @@ namespace Dragon
         #region Fields
         private Lexer _lexer;
         private Token _look;
-        public Env Top;
-        public int Used;
+        public Env Top { get; private set; }
+        public int Used { get; private set; }
         #endregion
-
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="lex">Lexer</param>
         public Parser(Lexer lex)
         {
-            this._lexer = lex;
-            this.Move();
             this.Top = null;
             this.Used = 0;
+            this._lexer = lex;
+            this.Move();
         }
-
+        /// <summary>
+        /// Recognize next token and save in _look;
+        /// </summary>
         public void Move()
         {
             _look = _lexer.Scan();
         }
-
+        /// <summary>
+        /// Throw excetion with lexical line number
+        /// </summary>
+        /// <param name="msg">message</param>
         public void Error(string msg)
         {
             //note The book here is lex.line, but Line is static member, so this might be a bug.
             throw new Exception("near line " + Lexer.Line + ": " + msg);
         }
-
+        /// <summary>
+        /// Match current token and scan next
+        /// </summary>
+        /// <param name="tag"></param>
         public void Match(int tag)
         {
             if (_look.TagValue == tag) this.Move();
             else this.Error("syntax error");
         }
-
+        /// <summary>
+        /// Top level abstraction interface
+        /// </summary>
         public void Program()
         {
-            Stmt s = this.Block();
-            int begin = s.NewLable();
-            int after = s.NewLable();
-            s.EmitLabel(begin);
-            s.Gen(begin, after);
-            s.EmitLabel(after);
+            var block = this.Block();
+            var begin = block.NewLable();
+            var after = block.NewLable();
+            block.EmitLabel(begin);
+            block.Gen(begin, after);
+            block.EmitLabel(after);
         }
         
         public Stmt Block()
