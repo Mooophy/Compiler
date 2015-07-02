@@ -90,5 +90,15 @@ namespace UnitTests
             //	        arr [ 20 ] = 42
             //    L1:	arr [ 20 ] = 42
         }
+
+        [TestMethod]
+        public void TestBreak()
+        {
+            Stmt.Enclosing = new Stmt();
+            var brk = new Break();
+            brk.Gen(10, 20);
+            //output:
+            //          goto L0
+        }
     }
 }

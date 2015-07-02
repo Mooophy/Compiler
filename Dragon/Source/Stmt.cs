@@ -279,9 +279,13 @@
         }
     }
 
+
+    /// <summary>
+    /// Sending control out of an enclosing loop or switch statement
+    /// </summary>
     public class Break : Stmt
     {
-        public Stmt Stmt;
+        public Stmt Stmt { get; private set; }
 
         public Break()
         {
@@ -290,7 +294,7 @@
             this.Stmt = Stmt.Enclosing;
         }
 
-        public override void Gen(int beginning, int after)
+        public override void Gen(int begin, int after)
         {
             this.Emit("goto L" + this.Stmt.After);
         }
