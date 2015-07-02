@@ -293,7 +293,11 @@
                 this.Error("unenclosed break");
             this.Stmt = Stmt.Enclosing;
         }
-
+        /// <summary>
+        /// Jump to the label stmt.after
+        /// </summary>
+        /// <param name="begin">not used</param>
+        /// <param name="after">not used</param>
         public override void Gen(int begin, int after)
         {
             this.Emit("goto L" + this.Stmt.After);
