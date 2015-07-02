@@ -77,5 +77,18 @@ namespace UnitTests
             //Output:	
             //          arr [ 20 ] = 42
         }
+
+        [TestMethod]
+        public void TestSeq()
+        {
+            var acc = new Access(new Id(new Word("arr", Tag.ID), Dragon.Type.Int, 0x20), new Constant(20), Dragon.Type.Int);
+            var setElem = new SetElem(acc, new Constant(42));
+
+            var seq = new Seq(setElem, setElem);
+            seq.Gen(10, 20);
+            //output:
+            //	        arr [ 20 ] = 42
+            //    L1:	arr [ 20 ] = 42
+        }
     }
 }
