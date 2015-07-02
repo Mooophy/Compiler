@@ -245,10 +245,13 @@
     }
 
 
+    /// <summary>
+    /// A sequence of statements
+    /// </summary>
     public class Seq : Stmt 
     {
-        public Stmt Stmt1;
-        public Stmt Stmt2;
+        public Stmt Stmt1 { get; private set; }
+        public Stmt Stmt2 { get; private set; }
         
         public Seq(Stmt stmt1, Stmt stmt2)
         {
@@ -256,20 +259,20 @@
             this.Stmt2 = stmt2;
         }
 
-        public override void Gen(int beginning, int after)
+        public override void Gen(int begin, int after)
         {
             if (this.Stmt1 == Stmt.Null)
             {
-                this.Stmt2.Gen(beginning, after);
+                this.Stmt2.Gen(begin, after);
             }
             else if (this.Stmt2 == Stmt.Null)
             {
-                this.Stmt1.Gen(beginning, after); 
+                this.Stmt1.Gen(begin, after); 
             }
             else
             {
-                int label = this.NewLable();
-                this.Stmt1.Gen(beginning, label);
+                var label = this.NewLable();
+                this.Stmt1.Gen(begin, label);
                 this.EmitLabel(label);
                 this.Stmt2.Gen(label, after);
             }
