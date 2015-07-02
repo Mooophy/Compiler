@@ -51,30 +51,36 @@ namespace Dragon
         /// </summary>
         public void Program()
         {
-            var block = this.Block();
-            var begin = block.NewLable();
-            var after = block.NewLable();
-            block.EmitLabel(begin);
-            block.Gen(begin, after);
-            block.EmitLabel(after);
+            var blk = this.Block();
+            var begin = blk.NewLable();
+            var after = blk.NewLable();
+            blk.EmitLabel(begin);
+            blk.Gen(begin, after);
+            blk.EmitLabel(after);
         }
-        
+        /// <summary>
+        /// Symbol table handling
+        /// </summary>
+        /// <returns></returns>
         public Stmt Block()
         {
             this.Match('{');
-            Env savedEnv = this.Top;
+            var savedEnv = this.Top;
             this.Top = new Env(this.Top);
 
             this.Declarations();
-            var s = this.Stmts();
+            var stmt = this.Stmts();
             this.Match('}');
             this.Top = savedEnv;
-            return s;
-        }
 
+            return stmt;
+        }
+        /// <summary>
+        /// Result in symbol-table for identifiers
+        /// </summary>
         public void Declarations()
         {
-            while(_look.TagValue == Tag.BASIC)
+            while(_look.TagValue == Tag.BASIC)  //D -> type ID
             {
                 var type = this.Type();
                 var tok = _look;
@@ -86,7 +92,10 @@ namespace Dragon
                 this.Used += type.Width;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Type</returns>
         public Dragon.Type Type()
         {
             var type = _look as Dragon.Type;    //expect _look.tag == Tag.Basic
@@ -94,20 +103,27 @@ namespace Dragon
 
             return _look.TagValue != '[' ? type : this.Dimension(type);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Type</returns>
         public Dragon.Type Dimension(Dragon.Type type)
         {
             this.Match('[');
-            Token tok = _look;
+            var tok = _look;
             this.Match(Tag.NUM);
             this.Match(']');
 
             if (_look.TagValue == '[')
                 type = this.Dimension(type);
 
-            return new Array(((Num)tok).Value, type);
+            return new Array((tok as Num).Value, type);
         }
-
+        /// <summary>
+        /// Hanlde stmts
+        /// </summary>
+        /// <returns></returns>
         public Stmt Stmts()
         {
             if (_look.TagValue == '}')
@@ -115,14 +131,17 @@ namespace Dragon
             else
                 return new Seq(this.Stmt(), this.Stmts());
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Stmt Stmt()
         {
             Expr expr;
             Stmt s1, s2, savedStmt;
             switch(_look.TagValue)
             {
-                case ':':
+                case ';':
                     this.Move();
                     return Dragon.Stmt.Null;
 
@@ -293,7 +312,9 @@ namespace Dragon
                 return new Not(this.Unary());
             }
             else
+            {
                 return this.Factor();
+            }
         }
 
         public Expr Factor()
