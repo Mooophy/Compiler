@@ -11,11 +11,11 @@ namespace Dragon
         private char _curr; // i.e. peek in dragon book
         public bool EofReached { get; private set; }
         public static int Line { get; private set; }
-        private Dictionary<string, Word> _words;
+        private Dictionary<string, Word> _keyWords;
 
         private void Reserve(Word w)
         {
-            _words.Add(w.Lexeme, w); 
+            _keyWords.Add(w.Lexeme, w); 
         }
 
         public Lexer(StreamReader r)
@@ -23,7 +23,7 @@ namespace Dragon
             Lexer.Line = 1;
             this._reader = r;
             this._curr = ' ';
-            this._words = new Dictionary<string, Word>();
+            this._keyWords = new Dictionary<string, Word>();
 
             this.Reserve(new Word("if", Tag.IF));
             this.Reserve(new Word("else", Tag.ELSE));
@@ -138,8 +138,8 @@ namespace Dragon
                     this.ReadChar();
                 } while (char.IsLetterOrDigit(_curr));
                 var s = b.ToString();
-                if (_words.ContainsKey(s)) return _words[s];
-                else return _words[s] = new Word(s, Tag.ID);
+                if (_keyWords.ContainsKey(s)) return _keyWords[s];
+                else return _keyWords[s] = new Word(s, Tag.ID);
             }
 
             //for the rest 
