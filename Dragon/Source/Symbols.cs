@@ -5,24 +5,24 @@ namespace Dragon
 {
     public class Env
     {
-        private Dictionary<Token, Id> _table;
-        protected Env _prev;
+        private Dictionary<Token, Id> SymbolTable { get; set; }
+        protected Env Prev { get; private set; }
 
         public Env(Env prev)
         {
-            _table = new Dictionary<Token, Id>();
-            _prev = prev;
+            this.SymbolTable = new Dictionary<Token, Id>();
+            this.Prev = prev;
         }
 
-        public void Add(Token tok, Id id)
+        public void AddIdentifier(Token tok, Id id)
         {
-            _table.Add(tok, id);
+            this.SymbolTable.Add(tok, id);
         }
 
         public Id Get(Token tok)
         {
-            for(var env = this; env != null; env = env._prev)
-                if (_table.Keys.Contains(tok)) return _table[tok];
+            for(var e = this; e != null; e = e.Prev)
+                if (e.SymbolTable.ContainsKey(tok)) return e.SymbolTable[tok];
             return null;
         }
     }
@@ -63,6 +63,9 @@ namespace Dragon
     }
 
 
+    /// <summary>
+    /// Type[size]
+    /// </summary>
     public class Array : Type
     {
         public Type Of;

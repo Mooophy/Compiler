@@ -88,7 +88,7 @@ namespace Dragon
                 this.Match(';');
 
                 var id = new Id(tok as Word, type, this.Used);
-                this.Top.Add(tok, id);
+                this.Top.AddIdentifier(tok, id);
                 this.Used += type.Width;
             }
         }

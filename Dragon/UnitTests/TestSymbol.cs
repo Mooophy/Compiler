@@ -49,7 +49,7 @@ namespace UnitTests
 
             var tok = new Word("some_var", Tag.ID);
             var id = new Id(tok, Dragon.Type.Int, 0xff);
-            global.Add(tok, id);
+            global.AddIdentifier(tok, id);
             
             Assert.ReferenceEquals(id, main.Get(tok));
             Assert.IsNull(global.Get(new Token(Tag.ID)));
