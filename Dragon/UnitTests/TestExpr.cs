@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Dragon;
+using Sara;
 
 namespace UnitTests
 {
@@ -10,9 +10,9 @@ namespace UnitTests
         [TestMethod]
         public void TestExprClass()
         {
-            var expr = new Expr(new Num(42), Dragon.Type.Int);
+            var expr = new Expr(new Num(42), Sara.Type.Int);
             Assert.AreEqual(Tag.NUM, expr.Op.TagValue);
-            Assert.AreEqual(Dragon.Type.Int, expr.Type);
+            Assert.AreEqual(Sara.Type.Int, expr.Type);
 
             Assert.AreSame(expr, expr.Gen());
             Assert.AreSame(expr, expr.Reduce());
@@ -25,30 +25,30 @@ namespace UnitTests
         [TestMethod]
         public void TestId()
         {
-            var id = new Id(new Word("some_var", Tag.ID), Dragon.Type.Int, 42);
+            var id = new Id(new Word("some_var", Tag.ID), Sara.Type.Int, 42);
             Assert.AreEqual(42, id.Offset);
         }
 
         [TestMethod]
         public void TestTemp()
         {
-            var temp = new Temp(Dragon.Type.Float);
-            var another_temp = new Temp(Dragon.Type.Int);
+            var temp = new Temp(Sara.Type.Float);
+            var another_temp = new Temp(Sara.Type.Int);
         }
 
         [TestMethod]
         public void TestOp()
         {
-            var plus = new Op(new Token('+'), Dragon.Type.Int);
+            var plus = new Op(new Token('+'), Sara.Type.Int);
             plus.Reduce(); 
 
-            var mult = new Op(new Token('*'), Dragon.Type.Float);
+            var mult = new Op(new Token('*'), Sara.Type.Float);
             mult.Reduce();
 
-            var grte = new Op(Word.ge, Dragon.Type.Char);
+            var grte = new Op(Word.ge, Sara.Type.Char);
             grte.Reduce();
 
-            var and = new Op(Word.and, Dragon.Type.Int);
+            var and = new Op(Word.and, Sara.Type.Int);
             and.Reduce();
 
             //output:
@@ -66,7 +66,7 @@ namespace UnitTests
         {
             var add = new Arith(new Token('+'), new Constant(42), new Constant(99));
             Assert.AreEqual("42 + 99", add.ToString());
-            Assert.IsTrue(add.Reduce() is Dragon.Temp);
+            Assert.IsTrue(add.Reduce() is Sara.Temp);
 
             var mult = new Arith(new Token('*'), new Constant(142), new Constant(0));
             var poly = new Arith(new Token('-'), add, mult);

@@ -1,4 +1,4 @@
-﻿namespace Dragon
+﻿namespace Sara
 {
     public class Expr : Node
     {
@@ -59,7 +59,7 @@
     public class Id : Expr
     {
         public int Offset { get; set; }
-        public Id(Word id, Dragon.Type type, int offset)
+        public Id(Word id, Sara.Type type, int offset)
             : base(id, type)
         {
             this.Offset = offset;
@@ -72,7 +72,7 @@
         static int Count = 0;
         public int Number { get; private set; }
 
-        public Temp(Dragon.Type type)
+        public Temp(Sara.Type type)
             : base(Word.temp, type)
         {
             this.Number = ++Temp.Count;
@@ -87,7 +87,7 @@
 
     public class Op : Expr
     {
-        public Op(Token op, Dragon.Type type)
+        public Op(Token op, Sara.Type type)
             : base(op, type)
         { }
 
@@ -113,7 +113,7 @@
         {
             this.ExprLeft = lhs;
             this.ExprRight = rhs;
-            this.Type = Dragon.Type.Max(this.ExprLeft.Type, this.ExprRight.Type);
+            this.Type = Sara.Type.Max(this.ExprLeft.Type, this.ExprRight.Type);
             if (this.Type == null)
                 this.Error("type error");
         }
@@ -135,7 +135,7 @@
         public Expr Expr { get; private set; }
 
         public Unary(Token op, Expr expr)
-            : base(op, Dragon.Type.Max(Dragon.Type.Int, expr.Type))
+            : base(op, Sara.Type.Max(Sara.Type.Int, expr.Type))
         {
             if (this.Type == null)
                 this.Error("type error");

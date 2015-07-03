@@ -1,18 +1,18 @@
-﻿namespace Dragon
+﻿namespace Sara
 {
     public class Constant : Expr
     {
-        public Constant(Token tok, Dragon.Type type)
+        public Constant(Token tok, Sara.Type type)
             : base(tok,type)
         { }
 
         public Constant(int i)
-            : base(new Num(i), Dragon.Type.Int)
+            : base(new Num(i), Sara.Type.Int)
         { }
 
         public static readonly Constant
-            True = new Constant(Word.True, Dragon.Type.Bool),
-            False = new Constant(Word.False, Dragon.Type.Bool);
+            True = new Constant(Word.True, Sara.Type.Bool),
+            False = new Constant(Word.False, Sara.Type.Bool);
 
         /// <summary>
         /// Only for Constant.True and Constant.False
@@ -59,10 +59,10 @@
         /// <param name="lhs"></param>
         /// <param name="rhs"></param>
         /// <returns>Dragon.Type.Bool or null</returns>
-        protected virtual Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
+        protected virtual Sara.Type Check(Sara.Type lhs, Sara.Type rhs)
         {
-            if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) 
-                return Dragon.Type.Bool;
+            if (lhs == Sara.Type.Bool && rhs == Sara.Type.Bool) 
+                return Sara.Type.Bool;
             return null;
         }
         /// <summary>
@@ -208,12 +208,12 @@
         /// <param name="lft"></param>
         /// <param name="rht"></param>
         /// <returns></returns>
-        protected override Dragon.Type Check(Dragon.Type lft, Dragon.Type rht)
+        protected override Sara.Type Check(Sara.Type lft, Sara.Type rht)
         {
             if (lft is Array || rht is Array)
                 return null;
             else
-                return lft == rht ? Dragon.Type.Bool : null;
+                return lft == rht ? Sara.Type.Bool : null;
         }
         /// <summary>
         /// Overriding
@@ -241,7 +241,7 @@
         /// <param name="arr"></param>
         /// <param name="idx"></param>
         /// <param name="type"></param>
-        public Access(Id arr, Expr idx, Dragon.Type type)
+        public Access(Id arr, Expr idx, Sara.Type type)
             : base(new Word("[]", Tag.INDEX), type)
         {
             this.Array = arr;

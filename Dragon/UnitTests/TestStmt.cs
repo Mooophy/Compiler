@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Dragon;
+using Sara;
 
 namespace UnitTests
 {
@@ -59,7 +59,7 @@ namespace UnitTests
         [TestMethod]
         public void TestSet()
         {
-            var foo = new Id(new Word("foo", Tag.ID), Dragon.Type.Int, 0x20);
+            var foo = new Id(new Word("foo", Tag.ID), Sara.Type.Int, 0x20);
             var bar = new Constant(55);
             var set = new Set(foo, bar);
 
@@ -71,7 +71,7 @@ namespace UnitTests
         [TestMethod]
         public void TestSetElem()
         {
-            var acc = new Access(new Id(new Word("arr", Tag.ID), Dragon.Type.Int,0x20), new Constant(20),Dragon.Type.Int);
+            var acc = new Access(new Id(new Word("arr", Tag.ID), Sara.Type.Int,0x20), new Constant(20),Sara.Type.Int);
             var setElem = new SetElem(acc, new Constant(42));
             setElem.Gen(10, 20);
             //Output:	
@@ -81,7 +81,7 @@ namespace UnitTests
         [TestMethod]
         public void TestSeq()
         {
-            var acc = new Access(new Id(new Word("arr", Tag.ID), Dragon.Type.Int, 0x20), new Constant(20), Dragon.Type.Int);
+            var acc = new Access(new Id(new Word("arr", Tag.ID), Sara.Type.Int, 0x20), new Constant(20), Sara.Type.Int);
             var setElem = new SetElem(acc, new Constant(42));
 
             var seq = new Seq(setElem, setElem);

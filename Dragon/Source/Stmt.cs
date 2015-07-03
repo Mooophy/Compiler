@@ -1,4 +1,4 @@
-﻿namespace Dragon
+﻿namespace Sara
 {
     public class Stmt : Node
     {
@@ -86,7 +86,7 @@
             this.Expr = expr;
             this.Stmt1 = stmt1;
             this.Stmt2 = stmt2;
-            if (this.Expr.Type != Dragon.Type.Bool)
+            if (this.Expr.Type != Sara.Type.Bool)
                 this.Expr.Error("boolean required in if");
         }
         /// <summary>
@@ -193,11 +193,11 @@
                 this.Error("type error");
         }
 
-        public Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
+        public Sara.Type Check(Sara.Type lhs, Sara.Type rhs)
         {
-            if (Dragon.Type.Numeric(lhs) && Dragon.Type.Numeric(rhs)) 
+            if (Sara.Type.Numeric(lhs) && Sara.Type.Numeric(rhs)) 
                 return rhs;
-            else if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) 
+            else if (lhs == Sara.Type.Bool && rhs == Sara.Type.Bool) 
                 return rhs;
             else 
                 return null;
@@ -228,11 +228,11 @@
                 this.Error("type error");
         }
 
-        private Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
+        private Sara.Type Check(Sara.Type lhs, Sara.Type rhs)
         {
             if (lhs is Array || rhs is Array) return null;
             else if (lhs == rhs) return rhs;
-            else if (Dragon.Type.Numeric(lhs) && Dragon.Type.Numeric(rhs)) return rhs;
+            else if (Sara.Type.Numeric(lhs) && Sara.Type.Numeric(rhs)) return rhs;
             else return null;
         }
 

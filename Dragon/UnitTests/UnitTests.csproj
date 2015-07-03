@@ -60,9 +60,9 @@
     <Compile Include="TestToken.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\Dragon.csproj">
+    <ProjectReference Include="..\Source\Source.csproj">
       <Project>{7a1ec6b0-8b27-480e-bd94-414b33850fb6}</Project>
-      <Name>Dragon</Name>
+      <Name>Source</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

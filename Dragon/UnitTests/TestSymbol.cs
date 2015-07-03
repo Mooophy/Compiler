@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Dragon;
+using Sara;
 
 namespace UnitTests
 {
@@ -10,35 +10,35 @@ namespace UnitTests
         [TestMethod]
         public void TestType()
         {
-            Assert.AreEqual("int", Dragon.Type.Int.Lexeme);
-            Assert.AreEqual(Tag.BASIC, Dragon.Type.Int.TagValue);
-            Assert.AreEqual(4, Dragon.Type.Int.Width);
+            Assert.AreEqual("int", Sara.Type.Int.Lexeme);
+            Assert.AreEqual(Tag.BASIC, Sara.Type.Int.TagValue);
+            Assert.AreEqual(4, Sara.Type.Int.Width);
 
-            Assert.AreEqual("float", Dragon.Type.Float.Lexeme);
-            Assert.AreEqual(Tag.BASIC, Dragon.Type.Float.TagValue);
-            Assert.AreEqual(8, Dragon.Type.Float.Width);
+            Assert.AreEqual("float", Sara.Type.Float.Lexeme);
+            Assert.AreEqual(Tag.BASIC, Sara.Type.Float.TagValue);
+            Assert.AreEqual(8, Sara.Type.Float.Width);
 
-            Assert.AreEqual("char", Dragon.Type.Char.Lexeme);
-            Assert.AreEqual(Tag.BASIC, Dragon.Type.Char.TagValue);
-            Assert.AreEqual(1, Dragon.Type.Char.Width);
+            Assert.AreEqual("char", Sara.Type.Char.Lexeme);
+            Assert.AreEqual(Tag.BASIC, Sara.Type.Char.TagValue);
+            Assert.AreEqual(1, Sara.Type.Char.Width);
 
-            Assert.AreEqual("bool", Dragon.Type.Bool.Lexeme);
-            Assert.AreEqual(Tag.BASIC, Dragon.Type.Bool.TagValue);
-            Assert.AreEqual(1, Dragon.Type.Bool.Width);
+            Assert.AreEqual("bool", Sara.Type.Bool.Lexeme);
+            Assert.AreEqual(Tag.BASIC, Sara.Type.Bool.TagValue);
+            Assert.AreEqual(1, Sara.Type.Bool.Width);
 
-            Assert.IsTrue(Dragon.Type.Numeric(Dragon.Type.Int));
-            Assert.IsTrue(Dragon.Type.Numeric(Dragon.Type.Float));
-            Assert.IsTrue(Dragon.Type.Numeric(Dragon.Type.Char));
-            Assert.IsFalse(Dragon.Type.Numeric(Dragon.Type.Bool));
+            Assert.IsTrue(Sara.Type.Numeric(Sara.Type.Int));
+            Assert.IsTrue(Sara.Type.Numeric(Sara.Type.Float));
+            Assert.IsTrue(Sara.Type.Numeric(Sara.Type.Char));
+            Assert.IsFalse(Sara.Type.Numeric(Sara.Type.Bool));
 
-            var list = new Dragon.Type("list", Tag.BASIC, 4);
+            var list = new Sara.Type("list", Tag.BASIC, 4);
             Assert.AreEqual("list", list.Lexeme);
             Assert.AreEqual(Tag.BASIC, list.TagValue);
             Assert.AreEqual(4, list.Width);
 
-            Assert.AreEqual(Dragon.Type.Float, Dragon.Type.Max(Dragon.Type.Float, Dragon.Type.Int));
-            Assert.AreEqual(Dragon.Type.Int, Dragon.Type.Max(Dragon.Type.Char, Dragon.Type.Int));
-            Assert.IsNull(Dragon.Type.Max(Dragon.Type.Bool, Dragon.Type.Float));
+            Assert.AreEqual(Sara.Type.Float, Sara.Type.Max(Sara.Type.Float, Sara.Type.Int));
+            Assert.AreEqual(Sara.Type.Int, Sara.Type.Max(Sara.Type.Char, Sara.Type.Int));
+            Assert.IsNull(Sara.Type.Max(Sara.Type.Bool, Sara.Type.Float));
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace UnitTests
             var main = new Env(global);
 
             var tok = new Word("some_var", Tag.ID);
-            var id = new Id(tok, Dragon.Type.Int, 0xff);
+            var id = new Id(tok, Sara.Type.Int, 0xff);
             global.AddIdentifier(tok, id);
             
             Assert.ReferenceEquals(id, main.Get(tok));
@@ -58,9 +58,9 @@ namespace UnitTests
         [TestMethod]
         public void TestArray()
         {
-            var arr = new Dragon.Array(42, Dragon.Type.Float);
+            var arr = new Sara.Array(42, Sara.Type.Float);
 
-            Assert.AreEqual(Dragon.Type.Float, arr.Of);
+            Assert.AreEqual(Sara.Type.Float, arr.Of);
             Assert.AreEqual(42, arr.Size);
             Assert.AreEqual("[42] float", arr.ToString());
             Assert.AreEqual(8 * 42, arr.Width);

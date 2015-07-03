@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dragon
+namespace Sara
 {
     public class Parser
     {
@@ -96,9 +96,9 @@ namespace Dragon
         /// 
         /// </summary>
         /// <returns>Type</returns>
-        public Dragon.Type Type()
+        public Sara.Type Type()
         {
-            var type = _look as Dragon.Type;    //expect _look.tag == Tag.Basic
+            var type = _look as Sara.Type;    //expect _look.tag == Tag.Basic
             this.Match(Tag.BASIC);
 
             return _look.TagValue != '[' ? type : this.Dimension(type);
@@ -108,7 +108,7 @@ namespace Dragon
         /// </summary>
         /// <param name="type"></param>
         /// <returns>Type</returns>
-        public Dragon.Type Dimension(Dragon.Type type)
+        public Sara.Type Dimension(Sara.Type type)
         {
             this.Match('[');
             var tok = _look;
@@ -127,7 +127,7 @@ namespace Dragon
         public Stmt Stmts()
         {
             if (_look.TagValue == '}')
-                return Dragon.Stmt.Null;
+                return Sara.Stmt.Null;
             else
                 return new Seq(this.Stmt(), this.Stmts());
         }
@@ -143,7 +143,7 @@ namespace Dragon
             {
                 case ';':
                     this.Move();
-                    return Dragon.Stmt.Null;
+                    return Sara.Stmt.Null;
 
                 case Tag.IF:
                     this.Match(Tag.IF);
@@ -161,21 +161,21 @@ namespace Dragon
 
                 case Tag.WHILE:
                     var whileNode = new While();
-                    savedStmt = Dragon.Stmt.Enclosing;
-                    Dragon.Stmt.Enclosing = whileNode;
+                    savedStmt = Sara.Stmt.Enclosing;
+                    Sara.Stmt.Enclosing = whileNode;
                     this.Match(Tag.WHILE);
                     this.Match('(');
                     expr = this.Bool();
                     this.Match(')');
                     s1 = this.Stmt();
                     whileNode.Init(expr, s1);
-                    Dragon.Stmt.Enclosing = savedStmt;
+                    Sara.Stmt.Enclosing = savedStmt;
                     return whileNode;
 
                 case Tag.DO:
                     var doNode = new Do();
-                    savedStmt = Dragon.Stmt.Enclosing;
-                    Dragon.Stmt.Enclosing = doNode;
+                    savedStmt = Sara.Stmt.Enclosing;
+                    Sara.Stmt.Enclosing = doNode;
                     this.Match(Tag.DO);
                     s1 = this.Stmt();
                     this.Match(Tag.WHILE);
@@ -184,7 +184,7 @@ namespace Dragon
                     this.Match(')');
                     this.Match(';');
                     doNode.Init(s1, expr);
-                    Dragon.Stmt.Enclosing = savedStmt;
+                    Sara.Stmt.Enclosing = savedStmt;
                     return doNode;
 
                 case Tag.BREAK:
@@ -329,12 +329,12 @@ namespace Dragon
                     return expr;
 
                 case Tag.NUM:
-                    expr = new Constant(_look, Dragon.Type.Int);
+                    expr = new Constant(_look, Sara.Type.Int);
                     this.Move();
                     return expr;
 
                 case Tag.REAL:
-                    expr = new Constant(_look, Dragon.Type.Float);
+                    expr = new Constant(_look, Sara.Type.Float);
                     this.Move();
                     return expr;
 

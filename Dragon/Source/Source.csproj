@@ -7,8 +7,8 @@
     <ProjectGuid>{7A1EC6B0-8B27-480E-BD94-414B33850FB6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dragon</RootNamespace>
-    <AssemblyName>dragon</AssemblyName>
+    <RootNamespace>Sara</RootNamespace>
+    <AssemblyName>sara</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

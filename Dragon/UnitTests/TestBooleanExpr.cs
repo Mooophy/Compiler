@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Dragon;
+using Sara;
 
 namespace UnitTests
 {
@@ -20,7 +20,7 @@ namespace UnitTests
 
             var c1 = new Constant(42);
             Assert.AreEqual("42", c1.ToString());
-            var c2 = new Constant(new Real(3.14f), Dragon.Type.Int);
+            var c2 = new Constant(new Real(3.14f), Sara.Type.Int);
             Assert.AreEqual("3.14", c2.ToString());
         }
 
@@ -87,7 +87,7 @@ namespace UnitTests
         [TestMethod]
         public void TestAccess()
         {
-            var acc = new Access(new Id(new Word("val", Tag.ID), Dragon.Type.Int, 0xcf), new Constant(42), Dragon.Type.Int);
+            var acc = new Access(new Id(new Word("val", Tag.ID), Sara.Type.Int, 0xcf), new Constant(42), Sara.Type.Int);
             Assert.AreEqual("val [ 42 ]", acc.ToString());
             Assert.IsTrue(acc.Gen() is Access);
             acc.Jumping(10, 100);
