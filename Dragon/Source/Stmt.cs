@@ -139,7 +139,7 @@
             var label = this.NewLable();    //label for stmt
             this.EmitLabel(label);
             this.Stmt.Gen(label, begin);
-            this.Emit("goto L " + begin);
+            this.Emit("goto L" + begin);
         }
     }
 
