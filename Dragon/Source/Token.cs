@@ -1,5 +1,8 @@
 ﻿namespace Dragon
 {
+    /// <summary>
+    /// Constants for tokens
+    /// </summary>
     public class Tag
     {
         public const char
@@ -13,19 +16,21 @@
             GE      = (char)263,
             ID      = (char)264,
             IF      = (char)265,
-            INDEX   = (char)266,
-            LE      = (char)267,
-            MINUS   = (char)268,
+            INDEX   = (char)266,    //used in syntax tree
+            LE      = (char)267,    //used in syntax tree
+            MINUS   = (char)268,    
             NE      = (char)269,
             NUM     = (char)270,
             OR      = (char)271,
             REAL    = (char)272,
-            TEMP    = (char)273,
+            TEMP    = (char)273,    //used in syntax tree
             TRUE    = (char)274,
             WHILE   = (char)275;
     }
 
-
+    /// <summary>
+    /// Representing a lexeme that indicates its purpose of parsing
+    /// </summary>
     public class Token
     {
         public char TagValue { get; private set; }
@@ -42,14 +47,17 @@
     }
 
 
+    /// <summary>
+    /// Integer
+    /// </summary>
     public class Num : Token
     {
         public int Value { get; private set; }
 
-        public Num(int v)
+        public Num(int val)
             : base(Tag.NUM)
         {
-            this.Value = v;
+            this.Value = val;
         }
 
         public override string ToString()
@@ -59,6 +67,9 @@
     }
 
 
+    /// <summary>
+    /// Manages lexemes for reserved words, identifiers and composite tokens like &&
+    /// </summary>
     public class Word : Token
     {
         public string Lexeme { get; private set; }
@@ -88,14 +99,17 @@
     }
 
 
+    /// <summary>
+    /// Floating point numbers
+    /// </summary>
     public class Real : Token
     {
-        public float Value { get; set; }
+        public float Value { get; private set; }
 
-        public Real(float v)
+        public Real(float val)
             : base(Tag.REAL)
         {
-            this.Value = v;
+            this.Value = val;
         }
 
         public override string ToString()
