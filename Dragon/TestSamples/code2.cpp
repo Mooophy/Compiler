@@ -3,6 +3,11 @@
 	float[100] a;
 	while(true)
 	{
-		do i = i + 1; while(a[i] < 42);
+		i = i + 1;
+		if(i > 42)
+		{
+			int k;
+			k = 99;
+		}
 	}
 }
