@@ -11,19 +11,19 @@ namespace Dragon
         private char _curr; // i.e. peek in dragon book
         public bool EofReached { get; private set; }
         public static int Line { get; private set; }
-        private Dictionary<string, Word> _keyWords;
+        public Dictionary<string, Word> KeyWords { get; private set; }
 
-        private void Reserve(Word w)
+        private void Reserve(Word word)
         {
-            _keyWords.Add(w.Lexeme, w); 
+            KeyWords.Add(word.Lexeme, word); 
         }
 
-        public Lexer(StreamReader r)
+        public Lexer(StreamReader reader)
         {
             Lexer.Line = 1;
-            this._reader = r;
+            this._reader = reader;
             this._curr = ' ';
-            this._keyWords = new Dictionary<string, Word>();
+            this.KeyWords = new Dictionary<string, Word>();
 
             this.Reserve(new Word("if", Tag.IF));
             this.Reserve(new Word("else", Tag.ELSE));
@@ -69,7 +69,10 @@ namespace Dragon
             this._curr = ' ';
             return true;
         }
-
+        /// <summary>
+        /// Read and return the current token
+        /// </summary>
+        /// <returns></returns>
         public Token Scan()
         {
             //for white spaces
@@ -110,20 +113,18 @@ namespace Dragon
             if (char.IsDigit(_curr))
             {
                 int v = 0;
-                do
-                {
+                do{
                     v = 10 * v + (int)(_curr - '0');
                     this.ReadChar();
                 } while (char.IsDigit(_curr));
                 if (_curr != '.') return new Num(v);
 
-                float f = v, d = 10;
-                for (; ; )
+                float f = v;
+                for (float d = 10; ; d *= 10)
                 {
                     this.ReadChar();
                     if (!char.IsDigit(_curr)) break;
                     f += (int)(_curr - 48) / d;
-                    d *= 10;
                 }
                 return new Real(f);
             }
@@ -138,8 +139,8 @@ namespace Dragon
                     this.ReadChar();
                 } while (char.IsLetterOrDigit(_curr));
                 var s = b.ToString();
-                if (_keyWords.ContainsKey(s)) return _keyWords[s];
-                else return _keyWords[s] = new Word(s, Tag.ID);
+                if (KeyWords.ContainsKey(s)) return KeyWords[s];
+                else return KeyWords[s] = new Word(s, Tag.ID);
             }
 
             //for the rest 
