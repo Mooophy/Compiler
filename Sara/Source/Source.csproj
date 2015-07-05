@@ -7,8 +7,8 @@
     <ProjectGuid>{AAFA1007-91A9-4F8E-BDE2-FA1CCF365D26}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Source</RootNamespace>
-    <AssemblyName>Source</AssemblyName>
+    <RootNamespace>Sara</RootNamespace>
+    <AssemblyName>sara</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lexer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />
