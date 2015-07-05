@@ -6,22 +6,22 @@ using System.Linq;
 
 namespace Sara
 {
-    public class Words : Dictionary<string, Word>
+    public class WordTable : Dictionary<string, Word>
     {
         private readonly List<Word> _keyWords = new List<Word>
         {
-                new Word("if", Tag.IF),
-                new Word("else", Tag.ELSE),
-                new Word("while", Tag.WHILE),
-                new Word("do", Tag.DO),
-                new Word("break", Tag.BREAK),
+            new Word("if", Tag.IF),
+            new Word("else", Tag.ELSE),
+            new Word("while", Tag.WHILE),
+            new Word("do", Tag.DO),
+            new Word("break", Tag.BREAK),
 
-                Word.True,
-                Word.False,
-                Type.Int,
-                Type.Char,
-                Type.Bool,
-                Type.Float
+            Word.True,
+            Word.False,
+            Type.Int,
+            Type.Char,
+            Type.Bool,
+            Type.Float
         };
 
         public List<Word> KeyWords
@@ -29,7 +29,7 @@ namespace Sara
             get { return _keyWords; }
         }
 
-        public Words()
+        public WordTable()
         {
             _keyWords.ForEach(w => { this[w.Lexeme] = w; });
         }
@@ -38,13 +38,13 @@ namespace Sara
     public class Lexer
     {
         private StreamReader _stream;
-        public Dictionary<string, Word> KeyWords { get; private set; }
+        public Dictionary<string, Word> Words { get; private set; }
         public long Line { get; private set; }
 
-        public Lexer(StreamReader sreader)
+        public Lexer(StreamReader sr)
         {
-            this._stream = sreader;
-            this.KeyWords = new Sara.Words();
+            this._stream = sr;
+            this.Words = new Sara.WordTable();
             this.Line = 1;
         }
     }
