@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Source")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Yue Wang")]
-[assembly: AssemblyProduct("Sara")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCompany("Hewlett-Packard Company")]
+[assembly: AssemblyProduct("Source")]
+[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e35f2de2-1a1b-4508-8b6f-b5c9fd1f70ea")]
+[assembly: Guid("985b178e-4926-45a6-8b1d-3f5a132c0af2")]
 
 // Version information for an assembly consists of the following four values:
 //
