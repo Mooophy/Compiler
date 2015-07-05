@@ -24,7 +24,6 @@ namespace Sara
             reserve(Word.False);
 
             //need class Type to before uncomment
-
             //reserve(Type.Int);
             //reserve(Type.Char);
             //reserve(Type.Bool);
@@ -35,6 +34,7 @@ namespace Sara
         {
             this._stream = sreader;
             this.KeyWords = new Dictionary<string, Word>();
+            this.InitKeyWords(this.KeyWords);
             this.Line = 1;
         }
     }
