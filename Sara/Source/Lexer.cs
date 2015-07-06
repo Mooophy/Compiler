@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Sara
 {
+    /// <summary>
+    /// Manage Id and reserved words
+    /// </summary>
     public class WordTable : Dictionary<string, Word>
     {
         private readonly List<Word> _keyWords = new List<Word>
@@ -52,43 +55,86 @@ namespace Sara
         private IList<Token> Scan(StreamReader reader)
         {
             //delegates for later use
-            Func<char> ch       = () => { return (char)reader.Peek(); };
-            Func<bool> notEof   = () => { return reader.Peek() != -1; };
-            Func<bool> isWS     = () => { return char.IsWhiteSpace(ch()); };
-            Func<bool> isWord   = () => { return char.IsLetter(ch()) || '_' == ch(); };
-            Action     move     = () => { reader.Read(); };
-            Func<char, bool> matchNext = (char arg) => { move(); return arg == ch(); };
-            var ret = new List<Token>();
+            Func<char> curr =
+                () => { return (char)reader.Peek(); };
 
-            while(notEof())
+            Func<bool> notEof =
+                () => { return reader.Peek() != -1; };
+
+            Func<bool> isWS =
+                () => { return char.IsWhiteSpace(curr()); };
+
+            Func<bool> isWord =
+                () => { return char.IsLetter(curr()) || '_' == curr(); };
+
+            Func<bool> isNumber =
+                () => { return char.IsDigit(curr()); };
+
+            Action move =
+                () => { reader.Read(); };
+
+            Func<char, bool> matchNext =
+                (char arg) => { move(); return arg == curr(); };
+
+            var ret = new List<Token>();
+            while (notEof())
             {
                 //for whitespace
-                for (; isWS(); move()) ;
+                if (isWS())
+                {
+                    while (isWS()) move();
+                    continue;
+                }
 
                 //for operators like && !=, etc
-                switch(ch())
+                switch (curr())
                 {
-                    case '&': 
-                        ret.Add(matchNext('&') ? Word.and : new Token('&')); break;
-                    case '|': 
-                        ret.Add(matchNext('|') ? Word.or  : new Token('|')); break;
+                    case '&':
+                        ret.Add(matchNext('&') ? Word.and : new Token('&')); continue;
+                    case '|':
+                        ret.Add(matchNext('|') ? Word.or : new Token('|')); continue;
                     case '=':
-                        ret.Add(matchNext('=') ? Word.eq  : new Token('=')); break;
+                        ret.Add(matchNext('=') ? Word.eq : new Token('=')); continue;
                     case '!':
-                        ret.Add(matchNext('=') ? Word.ne  : new Token('!')); break;
+                        ret.Add(matchNext('=') ? Word.ne : new Token('!')); continue;
                     case '<':
-                        ret.Add(matchNext('=') ? Word.le  : new Token('<')); break;
+                        ret.Add(matchNext('=') ? Word.le : new Token('<')); continue;
                     case '>':
-                        ret.Add(matchNext('=') ? Word.ge  : new Token('>')); break;
+                        ret.Add(matchNext('=') ? Word.ge : new Token('>')); continue;
+                }
+
+                if (isNumber())
+                {
+                    int v = 0;
+                    do
+                    {
+                        v = 10 * v + (int)(curr() - '0');
+                        move();
+                    } while (isNumber());
+                    if(curr() != '.')
+                    {
+                        ret.Add(new Num(v));
+                        continue;
+                    }
+
+                    float f = v;
+                    for (float d = 10; ; d *= 10)
+                    {
+                        move();
+                        if (!isNumber()) break;
+                        f += (int)(curr() - '0') / d;
+                    }
+                    ret.Add(new Real(f));
+                    continue;
                 }
 
                 //for identifiers and reserved words
-                if(isWord())
+                if (isWord())
                 {
                     var sb = new StringBuilder();
-                    sb.Append(ch());
+                    sb.Append(curr());
                     move();
-                    for (; isWord() || char.IsDigit(ch()); move()) sb.Append(ch());
+                    for (; isWord() || char.IsDigit(curr()); move()) sb.Append(curr());
                     var w = sb.ToString();
 
                     if (this.Words.ContainsKey(w)) this.Result.Add(Words[w]);
@@ -96,6 +142,5 @@ namespace Sara
             }
             return ret;
         }
-
     }
 }
