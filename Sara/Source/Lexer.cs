@@ -50,6 +50,7 @@ namespace Sara
             this._stream = sr;
             this.Words = new Sara.WordTable();
             this.Line = 1;
+            this.Result = this.Scan(_stream);
         }
 
         private IList<Token> Scan(StreamReader reader)
