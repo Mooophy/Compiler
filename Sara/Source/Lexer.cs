@@ -43,7 +43,7 @@ namespace Sara
         private StreamReader _stream;
         public Dictionary<string, Word> Words { get; private set; }
         public long Line { get; private set; }
-        public IList<Token> Result { get; private set; }
+        public List<Token> Result { get; private set; }
 
         public Lexer(StreamReader sr)
         {
@@ -53,7 +53,7 @@ namespace Sara
             this.Result = this.Scan(_stream);
         }
 
-        private IList<Token> Scan(StreamReader reader)
+        private List<Token> Scan(StreamReader reader)
         {
             //delegates for later use
             Func<char> curr =
@@ -138,8 +138,16 @@ namespace Sara
                     for (; isWord() || char.IsDigit(curr()); move()) sb.Append(curr());
                     var w = sb.ToString();
 
-                    if (this.Words.ContainsKey(w)) this.Result.Add(Words[w]);
+                    if (this.Words.ContainsKey(w))
+                        ret.Add(Words[w]);
+                    else
+                        ret.Add(new Word(w, Tag.ID));
+                    continue;
                 }
+
+                //for the rest like { ;
+                ret.Add(new Token(curr()));
+                move();
             }
             return ret;
         }
