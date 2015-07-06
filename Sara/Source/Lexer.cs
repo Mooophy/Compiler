@@ -62,6 +62,7 @@ namespace Sara
 
             while(notEof())
             {
+                //for whitespace
                 for (; isWS(); move()) ;
 
                 //for operators like && !=, etc
