@@ -1,10 +1,10 @@
 {
-	int i; 
+	int j; 
 	float[100] a;
 	while(true)
 	{
-		i = i + 1;
-		if(i > 42)
+		j = j + 1;
+		if(j > 42)
 		{
 			int k;
 			k = 99;
